@@ -39,8 +39,8 @@ app.use(express.static('server/public'));
 
 app.post('/api/joke', (req, res) => {
   console.log('Incoming Jokes');
-  //get from inputs
-  //push to jokes
+  const newJoke = req.body; //get from inputs
+  jokes.push(newJoke); //push to jokes
   res.sendStatus(201);
 });
 
