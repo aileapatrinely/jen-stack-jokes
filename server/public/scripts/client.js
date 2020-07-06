@@ -34,3 +34,17 @@ function postJoke() {
       alert('Ya Done Messed Up.');
     });
 }
+
+function getJokes(response) {
+  $.ajax({
+    type: 'GET',
+    url: '/api/joke',
+  })
+    .then((response) => {
+      renderJokes();
+    })
+    .catch((err) => {
+      console.log(err);
+      alert(`You're the joke, ya messed up.`);
+    });
+}
