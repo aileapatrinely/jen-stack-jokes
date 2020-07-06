@@ -2,7 +2,7 @@ console.log('client.js sourced');
 
 $(document).ready(onReady);
 
-const jokes = [];
+const joke = {};
 
 function onReady() {
   console.log('DOM ready');
@@ -10,10 +10,10 @@ function onReady() {
 }
 
 function addJoke() {
-  jokes.whoseJoke = $('#whoseJokeIn').val();
-  jokes.jokeQuestion = $('#questionIn').val();
-  jokes.punchLine = $('#punchlineIn').val();
-  console.log(jokes);
+  joke.whoseJoke = $('#whoseJokeIn').val();
+  joke.jokeQuestion = $('#questionIn').val();
+  joke.punchLine = $('#punchlineIn').val();
+  console.log(joke);
 
   postJoke();
 }
@@ -22,7 +22,7 @@ function postJoke() {
   $.ajax({
     type: 'POST',
     url: '/api/joke',
-    data: jokes,
+    data: joke,
   })
     .then((response) => {
       getJokes();
@@ -39,7 +39,7 @@ function getJokes(response) {
     url: '/api/joke',
   })
     .then((response) => {
-      renderJokes();
+      renderJokes(response);
     })
     .catch((err) => {
       console.log(err);
@@ -48,7 +48,10 @@ function getJokes(response) {
 }
 
 function renderJokes(jokes) {
-  $('#outputDiv')
-    .append(`<li>Whose Joke:${jokes.whoseJoke} + + Question:${jokes.jokeQuestion} 
-    + + Punchline:${jokes.punchLine}</li>`);
+  $('#outputDiv').empty();
+  for (let joke of jokes) {
+    $('#outputDiv')
+      .append(`<li>Whose Joke:${joke.whoseJoke} Question:${joke.jokeQuestion} 
+    Punchline:${joke.punchLine}</li>`);
+  }
 }
