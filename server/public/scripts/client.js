@@ -1,3 +1,5 @@
+const { get } = require('jquery');
+
 console.log('client.js sourced');
 
 $(document).ready(onReady);
@@ -15,7 +17,20 @@ function addJoke() {
   joke.punchLine = $('#punchlineIn').val();
   console.log(joke);
 
-  postJoke()
+  postJoke();
 }
 
-function
+function postJoke() {
+  $.ajax({
+    type: 'POST',
+    url: '/api/joke',
+    data: joke,
+  })
+    .then((response) => {
+      getJokes();
+    })
+    .catch((err) => {
+      console.log(err);
+      alert('Ya Done Messed Up.');
+    });
+}
