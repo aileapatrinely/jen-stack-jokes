@@ -1,10 +1,8 @@
-const { get } = require('jquery');
-
 console.log('client.js sourced');
 
 $(document).ready(onReady);
 
-const joke = {};
+const jokes = [];
 
 function onReady() {
   console.log('DOM ready');
@@ -12,10 +10,10 @@ function onReady() {
 }
 
 function addJoke() {
-  joke.whoseJoke = $('#whoseJokeIn').val();
-  joke.jokeQuestion = $('#questionIn').val();
-  joke.punchLine = $('#punchlineIn').val();
-  console.log(joke);
+  jokes.whoseJoke = $('#whoseJokeIn').val();
+  jokes.jokeQuestion = $('#questionIn').val();
+  jokes.punchLine = $('#punchlineIn').val();
+  console.log(jokes);
 
   postJoke();
 }
@@ -24,7 +22,7 @@ function postJoke() {
   $.ajax({
     type: 'POST',
     url: '/api/joke',
-    data: joke,
+    data: jokes,
   })
     .then((response) => {
       getJokes();
@@ -47,4 +45,10 @@ function getJokes(response) {
       console.log(err);
       alert(`You're the joke, ya messed up.`);
     });
+}
+
+function renderJokes(jokes) {
+  $('#outputDiv')
+    .append(`<li>Whose Joke:${jokes.whoseJoke} + + Question:${jokes.jokeQuestion} 
+    + + Punchline:${jokes.punchLine}</li>`);
 }
