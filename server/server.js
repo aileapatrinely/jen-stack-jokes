@@ -44,6 +44,11 @@ app.post('/api/joke', (req, res) => {
   res.sendStatus(201);
 });
 
+app.get('/api/joke', (req, res) => {
+  console.log('Outgoing Jokes');
+  res.send(jokes);
+});
+
 app.listen(PORT, () => {
   console.log('server running on: ', PORT);
 }); // end spin up server
