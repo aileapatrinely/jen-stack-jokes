@@ -7,6 +7,21 @@ const joke = {};
 function onReady() {
   console.log('DOM ready');
   $('#addJokeButton').on('click', addJoke);
+  currentJokes();
+}
+
+function currentJokes(response) {
+  $.ajax({
+    type: 'GET',
+    url: '/api/current',
+  })
+    .then((response) => {
+      renderJokes(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      alert(`You're the joke, ya messed up.`);
+    });
 }
 
 function addJoke() {
@@ -51,7 +66,8 @@ function renderJokes(jokes) {
   $('#outputDiv').empty();
   for (let joke of jokes) {
     $('#outputDiv')
-      .append(`<li>Whose Joke:${joke.whoseJoke} Question:${joke.jokeQuestion} 
-    Punchline:${joke.punchLine}</li>`);
+      .append(`<li>Whose Joke: ${joke.whoseJoke} Question: ${joke.jokeQuestion} 
+    Punchline: 
+    ${joke.punchLine}</li>`);
   }
 }

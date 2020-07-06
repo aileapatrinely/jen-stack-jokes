@@ -38,6 +38,11 @@ let jokes = [
 // serve back static files
 app.use(express.static('server/public'));
 
+app.get('/api/current', (req, res) => {
+  console.log('Outgoing Jokes');
+  res.send(jokes);
+});
+
 app.post('/api/joke', (req, res) => {
   console.log('Incoming Jokes');
   const newJoke = req.body; //get from inputs
